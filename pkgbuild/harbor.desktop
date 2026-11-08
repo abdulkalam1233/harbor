@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Harbor
+Comment=Manage Docker containers
+Comment[da]=Administrer Docker-containere
+Exec=harbor
+Icon=harbor
+Terminal=false
+Categories=Development;Utility;
+StartupWMClass=harbor

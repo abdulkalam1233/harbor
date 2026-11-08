@@ -1,0 +1,6 @@
+{
+  "%n containers": { "one": "%n container", "other": "%n containers" },
+  "%n running": { "one": "%n running", "other": "%n running" },
+  "%n selected": { "one": "%n selected", "other": "%n selected" },
+  "Remove %n containers?": { "one": "Remove %n container?", "other": "Remove %n containers?" }
+}
