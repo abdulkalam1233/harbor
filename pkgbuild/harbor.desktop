@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=Harbor
-Comment=Manage Docker containers
-Comment[da]=Administrer Docker-containere
+Comment=Manage Docker containers and see their CPU and memory footprint
+Comment[da]=Administrer Docker-containere og se deres CPU- og hukommelsesforbrug
 Exec=harbor
 Icon=harbor
 Terminal=false

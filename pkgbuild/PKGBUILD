@@ -1,7 +1,7 @@
 pkgname=harbor
 pkgver=0.1.0
 pkgrel=1
-pkgdesc='Start, stop, restart, remove Docker containers and read their logs'
+pkgdesc='Keyboard-driven Docker container manager: start, stop, remove, logs, and CPU and memory footprint'
 arch=('x86_64' 'aarch64')
 license=('MIT')
 depends=('qt6-base' 'qt6-declarative' 'qt6-wayland' 'docker')
