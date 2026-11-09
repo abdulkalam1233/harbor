@@ -21,7 +21,7 @@ Download the package from the [latest release](https://github.com/abdulkalam1233
 and install it:
 
 ```sh
-sudo pacman -U harbor-*-x86_64.pkg.tar.zst
+sudo pacman -U harbor-docker-*-x86_64.pkg.tar.zst
 ```
 
 Or build and install it from this checkout with `bin/install`.

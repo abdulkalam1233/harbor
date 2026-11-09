@@ -1,12 +1,13 @@
 # Maintainer: Abdul Kalam <abdul@incubyte.co>
 
-pkgname=harbor
+pkgname=harbor-docker
 pkgver=0.3.1
 pkgrel=1
 pkgdesc='Keyboard-driven Docker container manager: start, stop, remove, logs, and CPU and memory footprint'
 arch=('x86_64' 'aarch64')
 url='https://github.com/abdulkalam1233/harbor'
 license=('MIT')
+conflicts=('harbor')
 options=('!debug')
 depends=(
   'hicolor-icon-theme'
@@ -25,12 +26,12 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/abdulkalam1233/harbor/archi
 sha256sums=('abfed5dedf700e78afd1d9a732f1771b0677263aacf35acde4da0e0248f4597a')
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/harbor-$pkgver"
   ./bin/build
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd "$srcdir/harbor-$pkgver"
 
   install -Dm755 build/harbor "$pkgdir/usr/bin/harbor"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
