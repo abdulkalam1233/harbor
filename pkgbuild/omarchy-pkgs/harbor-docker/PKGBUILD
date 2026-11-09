@@ -1,7 +1,7 @@
 # Maintainer: Abdul Kalam <abdul@incubyte.co>
 
 pkgname=harbor-docker
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc='Keyboard-driven Docker container manager: start, stop, remove, logs, and CPU and memory footprint'
 arch=('x86_64' 'aarch64')
@@ -23,7 +23,7 @@ makedepends=(
   'qt6-declarative'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/abdulkalam1233/harbor/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('abfed5dedf700e78afd1d9a732f1771b0677263aacf35acde4da0e0248f4597a')
+sha256sums=('9f16b031a2d6f45bdc364c2ad00ab22b79560a5536a6a891fa65cc6cbf4c2135')
 
 build() {
   cd "$srcdir/harbor-$pkgver"
