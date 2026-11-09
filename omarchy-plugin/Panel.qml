@@ -27,6 +27,7 @@ Panel {
   property bool refreshAgain: false
   property var busyIds: []
   property int cursorIndex: 0
+  property string actionError: ""
   property bool cursorActive: false
 
   readonly property string harborCommand: "omarchy-launch-or-focus harbor"
@@ -86,6 +87,7 @@ Panel {
     var command = Model.actionCommand(action, id)
     if (isBusy(id) || command === null)
       return
+    actionError = ""
     busyIds = busyIds.concat([id])
     actionProcess.createObject(root, { containerId: id, command: command, running: true })
   }
@@ -93,8 +95,14 @@ Panel {
   function finishAction(id, exitCode, stdout, stderr) {
     busyIds = busyIds.filter(function (busyId) { return busyId !== id })
     if (exitCode !== 0)
-      failure = Model.failureKind(stderr + stdout, spawnFailed(exitCode, stdout, stderr))
+      actionError = actionErrorText(exitCode, stdout, stderr)
     refresh()
+  }
+
+  function actionErrorText(exitCode, stdout, stderr) {
+    var kind = Model.failureKind(stderr + stdout, spawnFailed(exitCode, stdout, stderr))
+    var detail = (stderr + stdout).trim()
+    return kind === "unknown" && detail !== "" ? detail : failureMessage(kind)
   }
 
   function toggleContainer(container) {
@@ -109,7 +117,7 @@ Panel {
 
   function moveCursor(step) {
     cursorActive = true
-    cursorIndex = Math.max(0, Math.min(stopCount - 1, cursorIndex + step))
+    cursorIndex = Model.clampCursor(cursorIndex + step, stopCount)
     scrollCursorIntoView()
   }
 
@@ -140,8 +148,14 @@ Panel {
   }
 
   function failureText() {
-    return strings.t("failure." + failure).arg(fixCommands[failure] || "")
+    return failureMessage(failure)
   }
+
+  function failureMessage(kind) {
+    return strings.t("failure." + kind).arg(fixCommands[kind] || "")
+  }
+
+  onStopCountChanged: cursorIndex = Model.clampCursor(cursorIndex, stopCount)
 
   Commons.Translations {
     id: strings
@@ -268,6 +282,16 @@ Panel {
 
           Text {
             width: parent.width
+            visible: root.failure === "" && root.actionError !== ""
+            text: root.actionError
+            textFormat: Text.PlainText
+            wrapMode: Text.WordWrap
+            color: Commons.Color.urgent
+            font.pixelSize: Style.font.body
+          }
+
+          Text {
+            width: parent.width
             visible: root.failure === "" && root.containers.length === 0
             text: strings.t("panel.empty")
             textFormat: Text.PlainText
@@ -340,7 +364,7 @@ Panel {
 
       Text {
         Layout.fillWidth: true
-        text: strings.t("state." + row.container.state)
+        text: strings.t("state." + row.container.state, row.container.state)
         textFormat: Text.PlainText
         elide: Text.ElideRight
         color: Commons.Color.foreground

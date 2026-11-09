@@ -93,4 +93,10 @@ TestCase {
         compare(Model.toggleAction({ state: "exited" }), "start")
         compare(Model.toggleAction({ state: "paused" }), "start")
     }
+
+    function test_keepsTheCursorOnAStopWhenTheListShrinks() {
+        compare(Model.clampCursor(8, 6), 5)
+        compare(Model.clampCursor(-1, 6), 0)
+        compare(Model.clampCursor(3, 6), 3)
+    }
 }

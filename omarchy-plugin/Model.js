@@ -55,6 +55,10 @@ function runningCount(containers) {
     return containers.filter(isRunning).length
 }
 
+function clampCursor(index, stopCount) {
+    return Math.max(0, Math.min(stopCount - 1, index))
+}
+
 function failureKind(output, failedToStart) {
     if (failedToStart)
         return "missing"
