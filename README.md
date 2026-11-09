@@ -32,9 +32,9 @@ how to fix it (usually `sudo usermod -aG docker $USER`, then log out and back in
 
 ## Bar widget
 
-Harbor ships an Omarchy bar widget. It shows a Docker icon with the number of
-running containers, and the tooltip says what it counts. Click it for a panel
-to start and stop containers and open Harbor. It needs Omarchy's shell.
+Harbor ships an Omarchy bar widget. It shows a Docker icon whose tooltip says
+how many containers are running. Click it for a panel to start and stop
+containers and open Harbor. It needs Omarchy's shell.
 
 The package installs the widget to `/usr/share/harbor/omarchy-plugin`. Link it
 into your Omarchy plugins and enable it:

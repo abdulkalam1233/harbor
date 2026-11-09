@@ -184,7 +184,6 @@ Panel {
     bar: root.bar
     text: "󰡨"
     dimmed: root.failure !== ""
-    labelText: root.failure === "" ? Commons.I18n.formatNumber(root.runningTotal) : ""
     tooltipText: root.tooltip
     onPressed: root.toggle()
   }
