@@ -1,0 +1,11 @@
+{
+  "tooltip.running": {
+    "one": "%1 of %2 container running",
+    "other": "%1 of %2 containers running"
+  },
+  "tooltip.none": "No containers",
+  "failure.missing": "Docker isn't installed. Install it with: %1",
+  "failure.denied": "Docker refused access. Add yourself to the docker group, then log out and back in: %1",
+  "failure.stopped": "Docker isn't running. Start it with: %1",
+  "failure.unknown": "Docker failed without saying why."
+}

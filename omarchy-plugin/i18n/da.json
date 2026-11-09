@@ -1,0 +1,11 @@
+{
+  "tooltip.running": {
+    "one": "%1 af %2 container kører",
+    "other": "%1 af %2 containere kører"
+  },
+  "tooltip.none": "Ingen containere",
+  "failure.missing": "Docker er ikke installeret. Installer det med: %1",
+  "failure.denied": "Docker nægtede adgang. Tilføj dig selv til docker-gruppen, og log derefter ud og ind igen: %1",
+  "failure.stopped": "Docker kører ikke. Start det med: %1",
+  "failure.unknown": "Docker fejlede uden at sige hvorfor."
+}

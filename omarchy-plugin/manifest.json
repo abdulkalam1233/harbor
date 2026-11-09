@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "harbor.containers",
+  "name": "Harbor",
+  "version": "0.2.0",
+  "author": "Abdul kalam",
+  "license": "MIT",
+  "description": "Shows how many Docker containers are running in the Omarchy bar.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Harbor",
+    "description": "The number of running Docker containers.",
+    "category": "Status",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
