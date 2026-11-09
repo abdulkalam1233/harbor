@@ -276,6 +276,13 @@ ApplicationWindow {
                     onClicked: win.stopMarked()
                 }
                 Button { text: qsTr("Remove"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.askRemove() }
+                Button {
+                    text: qsTr("Select all")
+                    flat: true
+                    focusPolicy: Qt.NoFocus
+                    enabled: win.marked.length < backend.containers.length
+                    onClicked: win.markAll()
+                }
                 Button { text: qsTr("Clear selection"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.clearMarks() }
                 Item { Layout.fillWidth: true }
                 Label { text: qsTr("%n selected", "", win.marked.length); opacity: 0.6 }
@@ -299,6 +306,7 @@ ApplicationWindow {
                     onClicked: win.toggleLogs()
                 }
                 Button { text: qsTr("Remove"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.askRemove() }
+                Button { text: qsTr("Select all"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.markAll() }
                 Item { Layout.fillWidth: true }
                 Label {
                     text: win.selected ? win.selected.name : ""
