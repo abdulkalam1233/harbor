@@ -1,0 +1,46 @@
+# Maintainer: Abdul Kalam <abdul@incubyte.co>
+
+pkgname=harbor
+pkgver=0.3.1
+pkgrel=1
+pkgdesc='Keyboard-driven Docker container manager: start, stop, remove, logs, and CPU and memory footprint'
+arch=('x86_64' 'aarch64')
+url='https://github.com/abdulkalam1233/harbor'
+license=('MIT')
+options=('!debug')
+depends=(
+  'hicolor-icon-theme'
+  'qt6-base'
+  'qt6-declarative'
+  'qt6-wayland'
+)
+optdepends=('docker: the containers Harbor manages')
+makedepends=(
+  'gcc'
+  'make'
+  'qt6-base'
+  'qt6-declarative'
+)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/abdulkalam1233/harbor/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('abfed5dedf700e78afd1d9a732f1771b0677263aacf35acde4da0e0248f4597a')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  ./bin/build
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  install -Dm755 build/harbor "$pkgdir/usr/bin/harbor"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 pkgbuild/harbor.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/harbor.svg"
+  install -Dm644 pkgbuild/harbor.desktop "$pkgdir/usr/share/applications/harbor.desktop"
+
+  local plugin="$pkgdir/usr/share/harbor/omarchy-plugin"
+  install -Dm644 omarchy-plugin/manifest.json "$plugin/manifest.json"
+  install -Dm644 omarchy-plugin/Model.js "$plugin/Model.js"
+  install -Dm644 omarchy-plugin/Panel.qml "$plugin/Panel.qml"
+  install -Dm644 omarchy-plugin/i18n/en.json "$plugin/i18n/en.json"
+  install -Dm644 omarchy-plugin/i18n/da.json "$plugin/i18n/da.json"
+}
