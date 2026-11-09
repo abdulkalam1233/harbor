@@ -1,6 +1,6 @@
 pkgname=harbor-docker
 conflicts=('harbor')
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc='Keyboard-driven Docker container manager: start, stop, remove, logs, and CPU and memory footprint'
 arch=('x86_64' 'aarch64')

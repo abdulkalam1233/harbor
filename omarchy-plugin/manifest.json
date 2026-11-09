@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "harbor.containers",
   "name": "Harbor",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Abdul kalam",
   "license": "MIT",
   "description": "Shows how many Docker containers are running in the Omarchy bar.",
