@@ -201,8 +201,9 @@ Panel {
 
     content: PanelKeyCatcher {
       property alias panelFlick: flick
-      implicitHeight: column.implicitHeight
+      implicitHeight: column.implicitHeight + footerGap + harborButton.implicitHeight
       anchors.fill: parent
+      readonly property real footerGap: Style.space(8)
       onMoveRequested: function(dx, dy) { root.moveCursor(dx !== 0 ? dx : dy) }
       onTabRequested: function(direction) { root.moveCursor(direction) }
       onActivateRequested: root.activateCursor()
@@ -210,16 +211,21 @@ Panel {
 
       Flickable {
         id: flick
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: harborButton.top
+        anchors.bottomMargin: parent.footerGap
         contentWidth: width
         contentHeight: column.implicitHeight
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        interactive: contentHeight > height
-        ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
+        interactive: scrolls
+        readonly property bool scrolls: contentHeight > height
+        ScrollBar.vertical: ScrollBar { id: scrollBar; policy: ScrollBar.AsNeeded }
 
         function cursorItem(index) {
-          return index < root.listedCount ? rows.itemAt(index) : harborButton
+          return index < root.listedCount ? rows.itemAt(index) : null
         }
 
         function reveal(item) {
@@ -233,7 +239,7 @@ Panel {
 
         Column {
           id: column
-          width: flick.width
+          width: flick.width - (flick.scrolls ? scrollBar.width + Style.space(4) : 0)
           spacing: Style.space(8)
 
           PanelSectionHeader {
@@ -283,17 +289,19 @@ Panel {
               onCursorRequested: root.setCursor(index)
             }
           }
-
-          Button {
-            id: harborButton
-            width: parent.width
-            text: strings.t("action.openHarbor")
-            bordered: true
-            hasCursor: root.cursorActive && root.cursorIndex === root.harborStop
-            onHovered: function(isHovered) { if (isHovered) root.setCursor(root.harborStop) }
-            onClicked: root.openHarbor()
-          }
         }
+      }
+
+      Button {
+        id: harborButton
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        text: strings.t("action.openHarbor")
+        bordered: true
+        hasCursor: root.cursorActive && root.cursorIndex === root.harborStop
+        onHovered: function(isHovered) { if (isHovered) root.setCursor(root.harborStop) }
+        onClicked: root.openHarbor()
       }
     }
   }
