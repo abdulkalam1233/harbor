@@ -7,5 +7,18 @@
   "failure.missing": "Docker er ikke installeret. Installer det med: %1",
   "failure.denied": "Docker nægtede adgang. Tilføj dig selv til docker-gruppen, og log derefter ud og ind igen: %1",
   "failure.stopped": "Docker kører ikke. Start det med: %1",
-  "failure.unknown": "Docker fejlede uden at sige hvorfor."
+  "failure.unknown": "Docker fejlede uden at sige hvorfor.",
+  "panel.title": "Containere",
+  "panel.empty": "Ingen containere endnu. Start en med docker run, så dukker den op her.",
+  "action.start": "Start",
+  "action.stop": "Stop",
+  "action.busy": "Arbejder…",
+  "action.openHarbor": "Åbn Harbor",
+  "state.running": "Kører",
+  "state.exited": "Stoppet",
+  "state.paused": "Sat på pause",
+  "state.restarting": "Genstarter",
+  "state.created": "Oprettet",
+  "state.removing": "Fjernes",
+  "state.dead": "Død"
 }

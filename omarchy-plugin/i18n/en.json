@@ -7,5 +7,18 @@
   "failure.missing": "Docker isn't installed. Install it with: %1",
   "failure.denied": "Docker refused access. Add yourself to the docker group, then log out and back in: %1",
   "failure.stopped": "Docker isn't running. Start it with: %1",
-  "failure.unknown": "Docker failed without saying why."
+  "failure.unknown": "Docker failed without saying why.",
+  "panel.title": "Containers",
+  "panel.empty": "No containers yet. Run one with docker run and it shows up here.",
+  "action.start": "Start",
+  "action.stop": "Stop",
+  "action.busy": "Working…",
+  "action.openHarbor": "Open Harbor",
+  "state.running": "Running",
+  "state.exited": "Stopped",
+  "state.paused": "Paused",
+  "state.restarting": "Restarting",
+  "state.created": "Created",
+  "state.removing": "Removing",
+  "state.dead": "Dead"
 }

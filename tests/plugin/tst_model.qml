@@ -87,4 +87,10 @@ TestCase {
         verify(!Model.sameContainers(before, after))
         verify(!Model.sameContainers(before, before.slice(0, 1)))
     }
+
+    function test_offersStopForRunningContainersAndStartForTheRest() {
+        compare(Model.toggleAction({ state: "running" }), "stop")
+        compare(Model.toggleAction({ state: "exited" }), "start")
+        compare(Model.toggleAction({ state: "paused" }), "start")
+    }
 }

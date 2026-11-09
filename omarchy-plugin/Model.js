@@ -47,6 +47,10 @@ function isRunning(container) {
     return container.state === RUNNING_STATE
 }
 
+function toggleAction(container) {
+    return isRunning(container) ? "stop" : "start"
+}
+
 function runningCount(containers) {
     return containers.filter(isRunning).length
 }
