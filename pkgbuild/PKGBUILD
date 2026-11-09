@@ -20,4 +20,9 @@ package() {
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
   install -Dm644 "$startdir/harbor.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/harbor.svg"
   install -Dm644 "$startdir/harbor.desktop" "$pkgdir/usr/share/applications/harbor.desktop"
+  install -Dm644 omarchy-plugin/manifest.json "$pkgdir/usr/share/harbor/omarchy-plugin/manifest.json"
+  install -Dm644 omarchy-plugin/Model.js "$pkgdir/usr/share/harbor/omarchy-plugin/Model.js"
+  install -Dm644 omarchy-plugin/Panel.qml "$pkgdir/usr/share/harbor/omarchy-plugin/Panel.qml"
+  install -Dm644 omarchy-plugin/i18n/en.json "$pkgdir/usr/share/harbor/omarchy-plugin/i18n/en.json"
+  install -Dm644 omarchy-plugin/i18n/da.json "$pkgdir/usr/share/harbor/omarchy-plugin/i18n/da.json"
 }

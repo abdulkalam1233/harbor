@@ -8,3 +8,5 @@ cd "$ROOT/build/tests"
 qmake6 "$ROOT/tests/harbor_tests.pro"
 make -j"$(nproc)"
 QT_QPA_PLATFORM=offscreen ./harbor_tests
+
+env -u QT_QPA_PLATFORMTHEME QT_QPA_PLATFORM=offscreen /usr/lib/qt6/bin/qmltestrunner -input "$ROOT/tests/plugin"
