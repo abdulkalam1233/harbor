@@ -13,6 +13,17 @@ Harbor talks to Docker through the `docker` command, so you need to be able
 to run `docker ps` without sudo. If you can't, Harbor says so and tells you
 how to fix it (usually `sudo usermod -aG docker $USER`, then log out and back in).
 
+## Install
+
+Download the package from the [latest release](https://github.com/abdulkalam1233/harbor/releases/latest)
+and install it:
+
+```sh
+sudo pacman -U harbor-*-x86_64.pkg.tar.zst
+```
+
+Or build and install it from this checkout with `bin/install`.
+
 ## Shortcuts
 
 | Key | Action |
@@ -34,7 +45,8 @@ how to fix it (usually `sudo usermod -aG docker $USER`, then log out and back in
 
 Harbor ships an Omarchy bar widget. It shows a Docker icon whose tooltip says
 how many containers are running. Click it for a panel to start and stop
-containers and open Harbor. It needs Omarchy's shell.
+containers and open Harbor. In the panel, `Tab` or the arrow keys move between
+buttons, `Enter` presses one, and `Esc` closes it. It needs Omarchy's shell.
 
 The package installs the widget to `/usr/share/harbor/omarchy-plugin`. Link it
 into your Omarchy plugins and enable it:
@@ -43,6 +55,9 @@ into your Omarchy plugins and enable it:
 ln -sfn /usr/share/harbor/omarchy-plugin ~/.config/omarchy/plugins/harbor.containers
 omarchy plugin enable harbor.containers --before omarchy.tray
 ```
+
+The bar keeps the widget it first loaded, so after upgrading Harbor run
+`omarchy restart shell` to pick up the new one.
 
 To disable it:
 
@@ -55,6 +70,6 @@ rm ~/.config/omarchy/plugins/harbor.containers
 
 ```sh
 bin/build      # builds build/harbor
-bin/test       # runs the tests offscreen
+bin/test       # runs the app and bar widget tests offscreen
 bin/install    # builds and installs the package, so it's in the app launcher
 ```
