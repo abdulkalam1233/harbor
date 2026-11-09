@@ -306,7 +306,13 @@ ApplicationWindow {
                     onClicked: win.toggleLogs()
                 }
                 Button { text: qsTr("Remove"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.askRemove() }
-                Button { text: qsTr("Select all"); flat: true; focusPolicy: Qt.NoFocus; onClicked: win.markAll() }
+                Button {
+                    text: qsTr("Select all")
+                    flat: true
+                    focusPolicy: Qt.NoFocus
+                    enabled: win.marked.length < backend.containers.length
+                    onClicked: win.markAll()
+                }
                 Item { Layout.fillWidth: true }
                 Label {
                     text: win.selected ? win.selected.name : ""
