@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
+import qs.Commons
 import qs.Commons as Commons
 import qs.Ui
 import "Model.js" as Model
@@ -11,6 +12,8 @@ Panel {
   moduleName: "harbor.containers"
   ipcTarget: "harbor.containers"
   manageIpc: false
+  implicitWidth: button.implicitWidth
+  implicitHeight: button.implicitHeight
 
   readonly property var fixCommands: ({
     missing: "sudo pacman -S docker",
