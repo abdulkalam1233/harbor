@@ -1,7 +1,11 @@
 .pragma library
 
 var RUNNING_STATE = "running"
-var ACTIONS = ["start", "stop"]
+var ACTION = { start: "start", stop: "stop" }
+var ACTIONS = [ACTION.start, ACTION.stop]
+
+var FIELD_SOURCES = { id: "ID", name: "Names", image: "Image", state: "State", status: "Status", ports: "Ports" }
+var CONTAINER_FIELDS = Object.keys(FIELD_SOURCES)
 
 var FAILURE_SYMPTOMS = [
     { symptom: "permission denied while trying to connect", kind: "denied" },
@@ -31,16 +35,13 @@ function parseLine(line) {
     } catch (error) {
         return undefined
     }
-    if (!json || typeof json !== "object" || !json.ID)
+    if (!json || typeof json !== "object" || !json[FIELD_SOURCES.id])
         return undefined
-    return {
-        id: json.ID,
-        name: json.Names || "",
-        image: json.Image || "",
-        state: json.State || "",
-        status: json.Status || "",
-        ports: json.Ports || ""
-    }
+    var container = {}
+    CONTAINER_FIELDS.forEach(function (field) {
+        container[field] = json[FIELD_SOURCES[field]] || ""
+    })
+    return container
 }
 
 function isRunning(container) {
@@ -48,7 +49,35 @@ function isRunning(container) {
 }
 
 function toggleAction(container) {
-    return isRunning(container) ? "stop" : "start"
+    return isRunning(container) ? ACTION.stop : ACTION.start
+}
+
+function isBusy(busyIds, id) {
+    return busyIds.indexOf(id) >= 0
+}
+
+function withBusy(busyIds, id) {
+    return isBusy(busyIds, id) ? busyIds : busyIds.concat([id])
+}
+
+function withoutBusy(busyIds, id) {
+    return busyIds.filter(function (busyId) {
+        return busyId !== id
+    })
+}
+
+var IDLE_REFRESH = { running: false, again: false }
+
+function requestRefresh(queue) {
+    if (queue.running)
+        return { queue: { running: true, again: true }, start: false }
+    return { queue: { running: true, again: false }, start: true }
+}
+
+function finishRefresh(queue) {
+    if (queue.again)
+        return { queue: { running: true, again: false }, start: true }
+    return { queue: IDLE_REFRESH, start: false }
 }
 
 function runningCount(containers) {
@@ -68,8 +97,6 @@ function failureKind(output, failedToStart) {
             return FAILURE_SYMPTOMS[i].kind
     return "unknown"
 }
-
-var CONTAINER_FIELDS = ["id", "name", "image", "state", "status", "ports"]
 
 function sameContainer(a, b) {
     return CONTAINER_FIELDS.every(function (field) {

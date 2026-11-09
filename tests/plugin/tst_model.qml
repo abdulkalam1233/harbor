@@ -99,4 +99,27 @@ TestCase {
         compare(Model.clampCursor(-1, 6), 0)
         compare(Model.clampCursor(3, 6), 3)
     }
+
+    function test_marksAContainerBusyOnceAndClearsIt() {
+        const busy = Model.withBusy(Model.withBusy([], "aaa111"), "aaa111")
+        compare(busy, ["aaa111"])
+        verify(Model.isBusy(busy, "aaa111"))
+        verify(!Model.isBusy(Model.withoutBusy(busy, "aaa111"), "aaa111"))
+    }
+
+    function test_startsAListingOnlyWhenNoneIsRunning() {
+        const first = Model.requestRefresh(Model.IDLE_REFRESH)
+        const second = Model.requestRefresh(first.queue)
+        verify(first.start)
+        verify(!second.start)
+    }
+
+    function test_runsOneQueuedListingAfterTheCurrentOneEnds() {
+        const queued = Model.requestRefresh(Model.requestRefresh(Model.IDLE_REFRESH).queue).queue
+        const afterFirst = Model.finishRefresh(queued)
+        const afterSecond = Model.finishRefresh(afterFirst.queue)
+        verify(afterFirst.start)
+        verify(!afterSecond.start)
+        verify(!afterSecond.queue.running)
+    }
 }

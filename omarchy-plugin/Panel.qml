@@ -23,8 +23,7 @@ Panel {
 
   property var containers: []
   property string failure: ""
-  property bool refreshing: false
-  property bool refreshAgain: false
+  property var refreshQueue: Model.IDLE_REFRESH
   property var busyIds: []
   property int cursorIndex: 0
   property string actionError: ""
@@ -41,17 +40,20 @@ Panel {
       return
     cursorIndex = 0
     cursorActive = true
+    actionError = ""
   }
 
   readonly property int runningTotal: Model.runningCount(containers)
   readonly property string tooltip: failure !== "" ? failureText() : healthyText()
 
   function refresh() {
-    if (refreshing) {
-      refreshAgain = true
+    applyRefreshStep(Model.requestRefresh(refreshQueue))
+  }
+
+  function applyRefreshStep(step) {
+    refreshQueue = step.queue
+    if (!step.start)
       return
-    }
-    refreshing = true
     listProcess.command = Model.listCommand()
     listProcess.running = true
   }
@@ -61,11 +63,7 @@ Panel {
       acceptListing(stdout)
     else
       failure = Model.failureKind(stderr + stdout, spawnFailed(exitCode, stdout, stderr))
-    refreshing = false
-    if (refreshAgain) {
-      refreshAgain = false
-      refresh()
-    }
+    applyRefreshStep(Model.finishRefresh(refreshQueue))
   }
 
   function spawnFailed(exitCode, stdout, stderr) {
@@ -80,7 +78,7 @@ Panel {
   }
 
   function isBusy(id) {
-    return busyIds.indexOf(id) >= 0
+    return Model.isBusy(busyIds, id)
   }
 
   function perform(action, id) {
@@ -88,12 +86,12 @@ Panel {
     if (isBusy(id) || command === null)
       return
     actionError = ""
-    busyIds = busyIds.concat([id])
+    busyIds = Model.withBusy(busyIds, id)
     actionProcess.createObject(root, { containerId: id, command: command, running: true })
   }
 
   function finishAction(id, exitCode, stdout, stderr) {
-    busyIds = busyIds.filter(function (busyId) { return busyId !== id })
+    busyIds = Model.withoutBusy(busyIds, id)
     if (exitCode !== 0)
       actionError = actionErrorText(exitCode, stdout, stderr)
     refresh()
